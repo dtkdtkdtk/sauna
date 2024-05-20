@@ -53,7 +53,7 @@ def call_chatgpt(prompt):
       messages = [
     {"role":"system","content":system},
     {"role":"user","content":prompt}
-    ])
+    ],max_tokens=2000,)
   return completion.choices[0].message.content
 
 
@@ -87,7 +87,7 @@ def call_recomend2(prompt2):
       messages = [
     {"role":"system","content":system3},
     {"role":"user","content":prompt2}
-    ])
+    ],max_tokens=2000)
   return completion.choices[0].message.content
 
 
