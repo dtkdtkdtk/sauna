@@ -26,34 +26,44 @@ system = '''
 -#出力例を参考に出力してください
 
 ###出力形式:
-{"sauna":{ここにサウナ施設名を入力},
- "kibo":{ここに希望条件を入力}}
+{"sauna":{ここにサウナ施設名を入力},"desirable":{ここに希望条件を入力}}
 
 ###出力例
  入力：私が好きなサウナはサウナセンターです。今日はサウナ室の温度が高いサウナに入りたいです。
  回答：
- {"sauna":サウナセンター,
- "kibo":温度の高いサウナ室}
+ {"sauna":サウナセンター,"desirable":温度の高いサウナ室}
 
  入力：サウナ北欧に行きたい気分だな。あそこは外気浴が気持ちよいから好き
  回答：
- {"sauna":北欧,
- "kibo":外気浴ができるところ}
+ {"sauna":北欧,"desirable":外気浴ができるところ}
 
  入力：昭和ストロングといえばサンデッキしかかたん
  回答：
- {"sauna":サンデッキ,
- "kibo":昭和ストロング}
+ {"sauna":サンデッキ,"desirable":昭和ストロング}
+
+ 入力：堀田湯のような銭湯型のサウナ
+ 回答：
+ {"sauna": "堀田湯", "desirable": "銭湯型のサウナ"}
+
+ 入力：サウナ施設の大きさといったらかるまる一択
+ 回答：
+ {"sauna": "かるまる", "desirable": "大きさ"}
+
  '''
+
+assistant_prompt = '{"sauna": "", "desirable": ""}'
 
 def call_chatgpt(prompt):
 
   completion = openai.chat.completions.create(
       model='gpt-4o',
+      response_format={"type":"json_object"},
       messages = [
     {"role":"system","content":system},
-    {"role":"user","content":prompt}
-    ],max_tokens=2000,)
+    {'role': 'assistant', 'content': assistant_prompt},
+    {"role":"user","content":prompt},
+    {'role': 'assistant', 'content': assistant_prompt},
+    ])
   return completion.choices[0].message.content
 
 
@@ -134,7 +144,7 @@ if prompt := st.chat_input():
     sauna_list = similar_sauna_details.iloc[:,0].tolist()
     sauna_summary = similar_sauna_details.to_json(orient='records', force_ascii=False)
 
-    sauna_kibo = sauna_info['kibo']
+    sauna_kibo = sauna_info['desirable']
     prompt2 = sauna_kibo
 
     system3 = f'''
