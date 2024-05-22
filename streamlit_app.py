@@ -10,7 +10,8 @@ import json
 
 file_url = 'https://drive.google.com/uc?id=1FFk8imDrmX22zHsAQjxBG1PxxuW1Uy-T&export=download'
 data = pd.read_csv(file_url)
-openai.api_key = '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'
+key = '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'
+openai.api_key = key
 
 system = '''
 
