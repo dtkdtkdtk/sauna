@@ -6,11 +6,7 @@ import numpy as np
 import ast  # ast モジュールをインポート
 import json
 
-with st.sidebar:
-    openai_api_key = st.text_input(
-        "OpenAI API Key", key="chatbot_api_key", type="password"
-    )
-    st.write("[Get an OpenAI API key](https://platform.openai.com/account/api-keys)")
+
 
 file_url = 'https://drive.google.com/uc?id=1FFk8imDrmX22zHsAQjxBG1PxxuW1Uy-T&export=download'
 data = pd.read_csv(file_url)
