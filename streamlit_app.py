@@ -8,7 +8,7 @@ import json
 
 
 
-file_url = ''
+file_url = 'https://drive.google.com/uc?export=download&id=1FFk8imDrmX22zHsAQjxBG1PxxuW1Uy-T'
 data = pd.read_csv(file_url)
 key = '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'
 openai.api_key = key
