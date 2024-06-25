@@ -10,8 +10,12 @@ import json
 
 file_url = 'https://drive.google.com/uc?export=download&id=1FFk8imDrmX22zHsAQjxBG1PxxuW1Uy-T'
 data = pd.read_csv(file_url)
-key = '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'
-openai.api_key = key
+with st.sidebar:
+    openai_api_key = st.text_input(
+        "OpenAI API Key", key="chatbot_api_key", type="password"
+    )
+    st.write("[Get an OpenAI API key](https://platform.openai.com/account/api-keys)")
+openai.api_key = openai_api_key
 
 system = '''
 
